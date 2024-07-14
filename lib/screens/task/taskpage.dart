@@ -50,8 +50,6 @@ class _TaskScreenState extends State<TaskScreen> {
                 } else if (state is TodoLoaded) {
                   final todoItems =
                       state.todos.where((todo) => !todo.isCompleted).toList();
-                  final completedItems =
-                      state.todos.where((todo) => todo.isCompleted).toList();
 
                   return ListView.builder(
                     itemCount: todoItems.length,

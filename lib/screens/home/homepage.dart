@@ -153,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
         } else if (state is TodoLoaded) {
           final taskList =
               state.todos.where((todo) => !todo.isCompleted).toList();
+
           return Scaffold(
             appBar: AppBar(
               actions: [
@@ -178,24 +179,36 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            body: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                  child: Text(
-                    'Tasks',
-                    style: Theme.of(context).textTheme.titleLarge,
+            body: taskList.isEmpty
+                ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('No todos Found'),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  )
+                : Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        child: Text(
+                          'Tasks',
+                          style: Theme.of(context).textTheme.titleLarge,
+                        ),
+                      ),
+                      Expanded(
+                        child: TaskList(
+                          taskList: taskList,
+                          onEditTask: (task) => _editTask(context, task),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-                Expanded(
-                  child: TaskList(
-                    taskList: taskList,
-                    onEditTask: (task) => _editTask(context, task),
-                  ),
-                ),
-              ],
-            ),
           );
         } else {
           return const Center(child: Text('Something went wrong!'));

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:todolist/common/widgets/textfield.dart';
 import 'package:todolist/utils/constants/text_string.dart';
 
 import '../../../../blocs/auth_bloc/auth_bloc.dart';
 import '../../../../blocs/auth_bloc/auth_event.dart';
 import '../../../../blocs/auth_bloc/auth_state.dart';
+import '../../../../utils/routes/router_constant.dart';
 
 class SignInForm extends StatefulWidget {
   const SignInForm({super.key});
@@ -30,6 +32,7 @@ class _SignInFormState extends State<SignInForm> {
             email: emailController.text,
             password: passwordController.text,
           ));
+      context.goNamed(AppRouteConstant.homeRouteName);
     }
   }
 

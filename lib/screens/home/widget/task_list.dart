@@ -1,20 +1,19 @@
 import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:todolist/blocs/bloc/todo_event.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todolist/models/tasks_model.dart';
+import 'package:todolist/blocs/todo_bloc/bloc_exports.dart';
+import 'package:todolist/common/widgets/icon_button.dart';
+import 'package:todolist/utils/constants/color.dart';
 
-import '../../../blocs/bloc_exports.dart';
-import '../../../common/widgets/icon_button.dart';
-
-import '../../../utils/constants/color/color.dart';
+import '../../../blocs/todo_bloc/todo_event.dart';
 
 class TaskList extends StatefulWidget {
   const TaskList({
-    super.key,
+    Key? key,
     required this.taskList,
     required this.onEditTask,
-  });
+  }) : super(key: key);
 
   final List<Todo> taskList;
   final Function(Todo) onEditTask;
@@ -62,7 +61,7 @@ class _TaskListState extends State<TaskList> {
                       ),
                       const SizedBox(height: 8),
                       Text(
-                        task.description ?? "",
+                        task.description ?? '',
                         maxLines: 3,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
@@ -79,59 +78,61 @@ class _TaskListState extends State<TaskList> {
                         filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
                         child: Container(
                           color: Colors.transparent,
-                          child: Stack(children: [
-                            Positioned(
-                              top: 10.0,
-                              right: 10.0,
-                              child: CustomIconButton(
-                                onPressed: () {
-                                  setState(() {
-                                    longPressedIndex = null;
-                                  });
-                                },
-                                icon: Icons.cancel,
-                                iconColor: AppColors.error,
+                          child: Stack(
+                            children: [
+                              Positioned(
+                                top: 10.0,
+                                right: 10.0,
+                                child: CustomIconButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      longPressedIndex = null;
+                                    });
+                                  },
+                                  icon: Icons.cancel,
+                                  iconColor: AppColors.error,
+                                ),
                               ),
-                            ),
-                            Center(
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  CustomIconButton(
-                                    onPressed: () {
-                                      widget.onEditTask(task);
-                                      setState(() {
-                                        longPressedIndex = null;
-                                      });
-                                    },
-                                    icon: Icons.edit,
-                                    iconColor: AppColors.info,
-                                  ),
-                                  CustomIconButton(
-                                    onPressed: () {
-                                      setState(() {
+                              Center(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    CustomIconButton(
+                                      onPressed: () {
+                                        widget.onEditTask(task);
+                                        setState(() {
+                                          longPressedIndex = null;
+                                        });
+                                      },
+                                      icon: Icons.edit,
+                                      iconColor: AppColors.info,
+                                    ),
+                                    CustomIconButton(
+                                      onPressed: () {
                                         context.read<TodoBloc>().add(
                                               DeleteTodo(id: task.id),
                                             );
-                                        longPressedIndex = null;
-                                      });
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content:
-                                              Text('Task Delete Successfully'),
-                                          backgroundColor: AppColors.error,
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                    },
-                                    icon: Icons.delete,
-                                    iconColor: AppColors.error,
-                                  ),
-                                ],
+                                        setState(() {
+                                          longPressedIndex = null;
+                                        });
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                                'Task Deleted Successfully'),
+                                            backgroundColor: AppColors.error,
+                                            duration: Duration(seconds: 2),
+                                          ),
+                                        );
+                                      },
+                                      icon: Icons.delete,
+                                      iconColor: AppColors.error,
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ),
-                          ]),
+                            ],
+                          ),
                         ),
                       ),
                     ),

@@ -1,4 +1,3 @@
-// todo_event.dart
 import 'package:equatable/equatable.dart';
 import 'package:todolist/models/tasks_model.dart';
 

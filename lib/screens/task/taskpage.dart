@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todolist/blocs/bloc/todo_bloc.dart';
-import 'package:todolist/blocs/bloc/todo_state.dart';
-import 'package:todolist/blocs/bloc/todo_event.dart';
+import 'package:todolist/blocs/todo_bloc/todo_bloc.dart';
+import 'package:todolist/blocs/todo_bloc/todo_state.dart';
+import 'package:todolist/blocs/todo_bloc/todo_event.dart';
 import 'package:todolist/common/widgets/icon_button.dart';
-import 'package:todolist/utils/constants/color/color.dart';
+import 'package:todolist/utils/constants/color.dart';
 
 import '../../models/tasks_model.dart';
 

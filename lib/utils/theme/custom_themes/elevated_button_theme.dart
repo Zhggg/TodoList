@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/color/color.dart';
-
-
+import '../../constants/color.dart';
 
 class AppElevatedButton {
 //Customizable Light Elevated Button Theme
@@ -30,7 +28,6 @@ class AppElevatedButton {
       elevation: 2,
       foregroundColor: AppColors.white,
       backgroundColor: AppColors.buttonPrimary,
-      
       side: const BorderSide(
         color: AppColors.buttonPrimary,
       ),

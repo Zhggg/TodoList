@@ -1,11 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:todolist/blocs/bloc_exports.dart';
-import 'package:todolist/common/widgets/textfield.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todolist/blocs/todo_bloc/todo_bloc.dart';
 import 'package:todolist/models/tasks_model.dart';
-import 'package:todolist/utils/constants/color/color.dart';
+import 'package:todolist/utils/constants/color.dart';
+import 'package:todolist/common/widgets/textfield.dart';
+import 'package:todolist/common/widgets/icon_button.dart';
 
-import '../../../blocs/bloc/todo_event.dart';
-import '../../../common/widgets/icon_button.dart';
+import '../../../blocs/todo_bloc/todo_event.dart';
 
 class AddTaskScreen extends StatefulWidget {
   final Todo? initialTodo;
@@ -13,10 +15,10 @@ class AddTaskScreen extends StatefulWidget {
   const AddTaskScreen({super.key, this.initialTodo});
 
   @override
-  AddTaskScreenState createState() => AddTaskScreenState();
+  _AddTaskScreenState createState() => _AddTaskScreenState();
 }
 
-class AddTaskScreenState extends State<AddTaskScreen> {
+class _AddTaskScreenState extends State<AddTaskScreen> {
   late TextEditingController taskNameController;
   late TextEditingController descriptionController;
 
@@ -36,6 +38,25 @@ class AddTaskScreenState extends State<AddTaskScreen> {
     super.dispose();
   }
 
+  Future<void> _saveTask(BuildContext context) async {
+    final todo = Todo(
+      id: widget.initialTodo?.id ?? '',
+      title: taskNameController.text.trim(),
+      description: descriptionController.text.trim().isNotEmpty
+          ? descriptionController.text.trim()
+          : null,
+      isCompleted: widget.initialTodo?.isCompleted ?? false,
+    );
+
+    if (widget.initialTodo != null) {
+      context.read<TodoBloc>().add(UpdateTodo(todo: todo));
+    } else {
+      context.read<TodoBloc>().add(AddTodo(todo: todo));
+    }
+
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -49,7 +70,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
             children: [
               Text(
                 widget.initialTodo != null ? "Edit Task" : "Add Task",
-                style: Theme.of(context).textTheme.titleMedium,
+                style: Theme.of(context).textTheme.bodyMedium,
               ),
               CustomIconButton(
                 onPressed: () {
@@ -74,38 +95,7 @@ class AddTaskScreenState extends State<AddTaskScreen> {
           ),
           const SizedBox(height: 10),
           ElevatedButton(
-            onPressed: () {
-              final todo = Todo(
-                id: widget.initialTodo?.id ?? '',
-                title: taskNameController.text.trim(),
-                description: descriptionController.text.trim().isNotEmpty
-                    ? descriptionController.text.trim()
-                    : null,
-                isCompleted: widget.initialTodo?.isCompleted ?? false,
-              );
-
-              if (widget.initialTodo != null) {
-                context.read<TodoBloc>().add(UpdateTodo(todo: todo));
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Task Updated Successfully'),
-                    backgroundColor: AppColors.success,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              } else {
-                context.read<TodoBloc>().add(AddTodo(todo: todo));
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Task Added Successfully'),
-                    backgroundColor: AppColors.success,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              }
-
-              Navigator.of(context).pop();
-            },
+            onPressed: () => _saveTask(context),
             child: Text(widget.initialTodo != null ? 'Update Task' : 'Save'),
           ),
           const SizedBox(

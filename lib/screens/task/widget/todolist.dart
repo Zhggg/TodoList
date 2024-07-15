@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/blocs/bloc_exports.dart';
+import 'package:todolist/blocs/todo_bloc/bloc_exports.dart';
 import 'package:todolist/models/tasks_model.dart';
 import 'package:todolist/screens/task/widget/complete.dart';
 
-import '../../../blocs/bloc/todo_event.dart';
-import '../../../blocs/bloc/todo_state.dart';
+import '../../../blocs/todo_bloc/todo_event.dart';
+import '../../../blocs/todo_bloc/todo_state.dart';
 
 class TodoListPage extends StatefulWidget {
   const TodoListPage({super.key});

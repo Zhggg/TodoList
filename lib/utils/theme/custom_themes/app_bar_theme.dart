@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../constants/color/color.dart';
-
+import '../../constants/color.dart';
 
 class AAppBarTheme {
 //Customizable Light Appbar Theme
@@ -23,6 +22,6 @@ class AAppBarTheme {
     backgroundColor: Colors.transparent,
     surfaceTintColor: Colors.transparent,
     iconTheme: IconThemeData(color: AppColors.buttonPrimary, size: 24),
-    actionsIconTheme: IconThemeData(color:AppColors.primaryColor, size: 24),
+    actionsIconTheme: IconThemeData(color: AppColors.primaryColor, size: 24),
   );
 }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:todolist/utils/constants/color/color.dart';
+import 'package:todolist/utils/constants/color.dart';
 
 import '../../screens/home/homepage.dart';
 import '../../screens/task/taskpage.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 

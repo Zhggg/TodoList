@@ -1,13 +1,10 @@
-
 import 'package:flutter/material.dart';
 
-import '../../constants/color/color.dart';
+import '../../constants/color.dart';
 
 class AppTextTheme {
 //Customizable Light Text Theme
   static TextTheme lightTextTheme = TextTheme(
-    
-
     //Label
     labelLarge: const TextStyle().copyWith(
       fontSize: 20.0,
